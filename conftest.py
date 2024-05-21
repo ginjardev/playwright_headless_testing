@@ -1,0 +1,77 @@
+import json
+import os
+import urllib
+import subprocess
+import pytest
+from playwright.sync_api import sync_playwright, Playwright
+from dotenv import load_dotenv
+
+
+load_dotenv("../.env", override=True)
+capabilities = {
+    "browserName": "Chrome",  # Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
+    "browserVersion": "latest",
+    "LT:Options": {
+        "platform": "Windows 10",
+        "build": "Playwright Headless Python Build",
+        "name": "Complete Guide to Playwright Headless Testing",
+        "user": os.getenv("LT_USERNAME"),
+        "accessKey": os.getenv("LT_ACCESS_KEY"),
+        "network": True,
+        "video": True,
+        "console": True,
+        "tunnel": False,  # Add tunnel configuration if testing locally hosted webpage
+        "tunnelName": "",  # Optional
+        "geoLocation": "",  # country code can be fetched from https://www.lambdatest.com/capabilities-generator/
+    },
+}
+
+
+# Pytest fixture for browser setup
+@pytest.fixture(name="browser", scope="module")
+def browser():
+    with sync_playwright() as playwright:
+        playwrightVersion = (
+            str(subprocess.getoutput("playwright --version")).strip().split(" ")[1]
+        )
+        capabilities["LT:Options"]["playwrightClientVersion"] = playwrightVersion
+        lt_cdp_url = (
+            "wss://cdp.lambdatest.com/playwright?capabilities="
+            + urllib.parse.quote(json.dumps(capabilities))
+        )
+        browser = playwright.chromium.connect(lt_cdp_url, timeout=30000)
+        yield browser
+        browser.close()
+
+
+# Pytest fixture for page setup
+@pytest.fixture
+def page(browser):
+    page = browser.new_page()
+    yield page
+    page.close()
+
+
+# @pytest.fixture(name="local_grid_page")
+@pytest.fixture
+def playwright_local_grid_page():
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        page = browser.new_page()
+        yield page
+        page.close()
+
+
+@pytest.fixture
+def set_test_status(page):
+    def _set_test_status(status, remark):
+        page.evaluate(
+            "_ => {}",
+            'lambdatest_action: {"action": "setTestStatus", "arguments": {"status":"'
+            + status
+            + '", "remark": "'
+            + remark
+            + '"}}',
+        )
+
+    yield _set_test_status

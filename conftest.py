@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv("../.env", override=True)
+
 capabilities = {
     "browserName": "Chrome",  # Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
     "browserVersion": "latest",
@@ -27,7 +28,7 @@ capabilities = {
 }
 
 
-# Pytest fixture for browser setup
+# Pytest browser fixture (for cloud testing)
 @pytest.fixture(name="browser", scope="module")
 def browser():
     with sync_playwright() as playwright:
@@ -44,7 +45,7 @@ def browser():
         browser.close()
 
 
-# Pytest fixture for page setup
+# Pytest page fixture (for cloud testing)
 @pytest.fixture
 def page(browser):
     page = browser.new_page()
@@ -52,7 +53,7 @@ def page(browser):
     page.close()
 
 
-# @pytest.fixture(name="local_grid_page")
+# Pytest playwright local grid page fixture (for local testing)
 @pytest.fixture
 def playwright_local_grid_page():
     with sync_playwright() as playwright:
@@ -62,6 +63,7 @@ def playwright_local_grid_page():
         page.close()
 
 
+# sets status of test case if passed or failed
 @pytest.fixture
 def set_test_status(page):
     def _set_test_status(status, remark):

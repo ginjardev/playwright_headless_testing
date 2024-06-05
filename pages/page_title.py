@@ -1,5 +1,6 @@
 # from conftest import browser, page
 
+
 class PageTitle:
 
     def __init__(self, page):

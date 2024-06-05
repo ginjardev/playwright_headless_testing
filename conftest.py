@@ -57,7 +57,7 @@ def page(browser):
 @pytest.fixture
 def playwright_local_grid_page():
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True)
+        browser = playwright.chromium.launch(headless=False)
         page = browser.new_page()
         yield page
         page.close()

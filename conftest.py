@@ -6,7 +6,6 @@ import pytest
 from playwright.sync_api import sync_playwright, Playwright
 from dotenv import load_dotenv
 
-
 load_dotenv("../.env", override=True)
 
 capabilities = {

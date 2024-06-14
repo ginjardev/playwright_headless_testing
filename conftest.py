@@ -3,7 +3,7 @@ import os
 import urllib
 import subprocess
 import pytest
-from playwright.sync_api import sync_playwright, Playwright
+from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
 
 load_dotenv("../.env", override=True)
@@ -56,7 +56,7 @@ def page(browser):
 @pytest.fixture
 def playwright_local_grid_page():
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch()
         page = browser.new_page()
         yield page
         page.close()

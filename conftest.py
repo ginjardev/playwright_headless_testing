@@ -54,7 +54,7 @@ def page(browser):
 
 # Pytest playwright local grid page fixture (for local testing)
 @pytest.fixture
-def playwright_local_grid_page():
+def playwright_local_page():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page()

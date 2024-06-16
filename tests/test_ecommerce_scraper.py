@@ -1,7 +1,6 @@
-from conftest import playwright_local_grid_page
+from conftest import playwright_local_page
 from conftest import browser, page, set_test_status
 from pages.ecommerce_scraper import EcommerceScraper
-from playwright.sync_api import expect
 
 
 def test_product_title_list(page, set_test_status):

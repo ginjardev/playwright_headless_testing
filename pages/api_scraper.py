@@ -1,4 +1,5 @@
-# LambdaTest API scraper
+"""LambdaTest API scraper Class"""
+
 import os
 from dotenv import load_dotenv
 

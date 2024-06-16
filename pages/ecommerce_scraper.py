@@ -1,4 +1,5 @@
-# LambdaTest ecommerce playground web scraper
+"""LambdaTest ecommerce playground web scraper Class"""
+
 import time
 
 
@@ -76,12 +77,12 @@ class EcommerceScraper:
         return links
 
     def display_scraped_product_details(self):
-        prices = self.product_price_grid_list()
+        product_prices = self.product_price_grid_list()
         product_names = self.product_title_grid_list()
         product_image_links = self.product_image_grid_list()
 
         # match product image, name and price for each item
-        details_zip = zip(product_image_links, product_names, prices)
+        details_zip = zip(product_image_links, product_names, product_prices)
 
         # make a list of the zip object 'details_zip'
         details_list = list(details_zip)

@@ -43,8 +43,8 @@ class APIScraper:
         ).click()
 
     # Enter 'fromdate' parameter to fetch response data
-    def fetch_build_data(self):
-        # click on Build API endpoint
+    def fetch_builds_data(self):
+        # click on Builds API endpoint
         self.page.frame_locator(".embed-responsive-item >> nth=0").locator(
             "#operations-Build-builds"
         ).get_by_text("GET").click()
@@ -65,7 +65,7 @@ class APIScraper:
         ).click()
 
     # scrape response body
-    def scrape_build_data(self):
+    def scrape_builds_data(self):
         # select the response body locator and extract text
         return (
             self.page.frame_locator(".embed-responsive-item >> nth=0")

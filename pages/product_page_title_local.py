@@ -1,3 +1,5 @@
+"""Product Page Title Class"""
+
 class ProductPageTitle:
 
     def __init__(self, page):

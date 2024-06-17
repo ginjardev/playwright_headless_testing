@@ -1,4 +1,5 @@
-from conftest import playwright_local_page
+"""Ecommerce scraper Class Tests"""
+
 from conftest import browser, page, set_test_status
 from pages.ecommerce_scraper import EcommerceScraper
 
@@ -59,6 +60,7 @@ def test_product_detail_list(page, set_test_status):
     scraper = EcommerceScraper(page)
     scraper.select_product_category()
     product_detail_list = scraper.display_scraped_product_details()
+    print(product_detail_list)
 
     print("Scraped Product Details: ", product_detail_list)
 

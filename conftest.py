@@ -12,7 +12,7 @@ capabilities = {
     "browserName": "Chrome",  # Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
     "browserVersion": "latest",
     "LT:Options": {
-        "platform": "Windows 10",
+        "platform": "Windows 11",
         "build": "Playwright Headless Python Build",
         "name": "Complete Guide to Playwright Headless Testing",
         "user": os.getenv("LT_USERNAME"),
@@ -20,6 +20,7 @@ capabilities = {
         "network": True,
         "video": True,
         "console": True,
+        "headless": True,
         "tunnel": False,  # Add tunnel configuration if testing locally hosted webpage
         "tunnelName": "",  # Optional
         "geoLocation": "",  # country code can be fetched from https://www.lambdatest.com/capabilities-generator/
@@ -56,7 +57,7 @@ def page(browser):
 @pytest.fixture
 def playwright_local_page():
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch()
+        browser = playwright.chromium.launch(headless=True)
         page = browser.new_page()
         yield page
         page.close()
